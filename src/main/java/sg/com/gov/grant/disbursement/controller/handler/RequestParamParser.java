@@ -1,4 +1,4 @@
-package sg.com.gov.grant.disbursement.controller;
+package sg.com.gov.grant.disbursement.controller.handler;
 
 import sg.com.gov.grant.disbursement.domain.baseType.HousingType;
 import sg.com.gov.grant.disbursement.domain.baseType.MaritalStatusType;
