@@ -23,8 +23,8 @@ public class RequestParamParser {
         if(null != housingType) {
             householdSpecification
                     .add(new SearchCriteria("housingType",
-                            getOperatorFromReq(householdSize),
-                            HousingType.fromString(getValueFromReq(householdSize))));
+                            getOperatorFromReq(housingType),
+                            HousingType.fromString(getValueFromReq(housingType))));
         }
         if(null != totalIncome) {
             householdSpecification
