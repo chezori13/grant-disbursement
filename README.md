@@ -26,3 +26,8 @@ Datasource
 
 You should be all set, run the project again.
     ./gradlew bootRun
+
+API Documentation
+------------------
+1. This project supports Swagger-UI doc, access the URL below when the project is running.
+    http://localhost:8080/swagger-ui.html#/household-controller
