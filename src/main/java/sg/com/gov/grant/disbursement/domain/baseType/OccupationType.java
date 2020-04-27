@@ -1,7 +1,7 @@
 package sg.com.gov.grant.disbursement.domain.baseType;
 
 public enum OccupationType {
-    UNEMPLOYED("Unemployed"), STUDENT("Student"), EMPLOYED("Employed");
+    UNEMPLOYED("Unemployed"), STUDENT("Student"), EMPLOYED("Employed"), NA("NA");
     private String value;
 
     OccupationType(String value) {
@@ -19,7 +19,8 @@ public enum OccupationType {
 
     public static OccupationType fromString(String text) {
         if(null==text){
-            return null;
+            throw new IllegalArgumentException(String.format(
+                    "OccupationType cannot be empty. Options: %s, %s, %s, %s", UNEMPLOYED, STUDENT, EMPLOYED, NA));
         }
 
         switch (text.toUpperCase()) {
@@ -29,6 +30,8 @@ public enum OccupationType {
                 return OccupationType.STUDENT;
             case "EMPLOYED":
                 return OccupationType.EMPLOYED;
+            case "NA":
+                return OccupationType.NA;
             default:
                 throw new RuntimeException(String.format("Invalid OccupationType: %s", text));
 

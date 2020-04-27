@@ -20,7 +20,8 @@ public enum HousingType {
 
     public static HousingType fromString(String text) {
         if(null==text){
-            return null;
+            throw new IllegalArgumentException(String.format(
+                    "HousingType cannot be empty. Options: %s, %s, %s", LANDED, CONDOMINIUM, HDB));
         }
 
         switch (text.toUpperCase()) {
