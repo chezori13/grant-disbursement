@@ -10,7 +10,7 @@ Build Environment
 4. Command to RUN the project:
     ./gradlew bootRun
 
-5. If there is context load exception when executing ./gradlew command, it means that connection to Database is not setup yet.
+5. If there is context load exception when executing ./gradlew bootRun command, it means that connection to Database is not setup yet.
     Please proceed to Datasource Section
 
 Datasource
