@@ -60,6 +60,9 @@ public class FamilyMemberResourceConverter {
         else{
             familyMember = entitySupplier.get();
         }
+        if(StringUtils.isEmpty(familyMemberResource.getName())){
+            throw new IllegalArgumentException("FamilyMember name cannot be empty");
+        }
 
         familyMember.setName(familyMemberResource.getName());
         familyMember.setGender(GenderType.fromString(familyMemberResource.getGender()));

@@ -1,7 +1,7 @@
 package sg.com.gov.grant.disbursement.domain.baseType;
 
 public enum MaritalStatusType {
-    SINGLE("Single"), MARRIED("Married"), DIVORCED("Divorced"), SEPARATED("Separated");
+    SINGLE("Single"), MARRIED("Married"), DIVORCED("Divorced");
 
     private String value;
 
@@ -20,7 +20,8 @@ public enum MaritalStatusType {
 
     public static MaritalStatusType fromString(String text) {
         if(null==text){
-            return null;
+            throw new IllegalArgumentException(String.format(
+                    "MaritalStatus cannot be empty. Options: %s, %s, %s, %s", SINGLE, MARRIED, DIVORCED));
         }
 
         switch (text.toUpperCase()) {
@@ -30,8 +31,6 @@ public enum MaritalStatusType {
                 return MaritalStatusType.MARRIED;
             case "DIVORCED":
                 return MaritalStatusType.DIVORCED;
-            case "SEPARATED":
-                return MaritalStatusType.SEPARATED;
             default:
                 throw new RuntimeException(String.format("Invalid MaritalStatusType: %s", text));
 
