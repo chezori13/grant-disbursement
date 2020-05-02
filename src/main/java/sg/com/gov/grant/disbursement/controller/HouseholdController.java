@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import sg.com.gov.grant.disbursement.controller.handler.FamilyMemberResourceConverter;
 import sg.com.gov.grant.disbursement.controller.handler.HouseholdResourceConverter;
 import sg.com.gov.grant.disbursement.controller.handler.RequestParamParser;
+import sg.com.gov.grant.disbursement.domain.FamilyMember;
 import sg.com.gov.grant.disbursement.domain.Household;
 import sg.com.gov.grant.disbursement.persistence.specification.HouseholdSpecification;
 import sg.com.gov.grant.disbursement.resource.FamilyMemberResource;
@@ -78,7 +79,7 @@ public class HouseholdController {
     public HouseholdResource addFamilyMember(@PathVariable Long id, @RequestBody FamilyMemberResource familyMemberResource){
 
         Household updatedHousehold = householdService
-                .addFamilyMember(id, familyMemberResourceConverter.convertResourceToEntity(familyMemberResource, null));
+                .addFamilyMember(id, familyMemberResourceConverter.convertResourceToEntity(familyMemberResource,() -> new FamilyMember()));
 
         return householdResourceConverter.convertEntityToResource(updatedHousehold);
     }

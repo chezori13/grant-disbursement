@@ -55,7 +55,9 @@ public class FamilyMemberResourceConverter {
         FamilyMember familyMember;
         if(null == entitySupplier){
             familyMember = new FamilyMember();
-            familyMember.setId(familyMemberResource.getId());
+            if(0!=familyMemberResource.getId()){
+                familyMember.setId(familyMemberResource.getId());
+            }
         }
         else{
             familyMember = entitySupplier.get();
@@ -99,7 +101,7 @@ public class FamilyMemberResourceConverter {
         ArrayList<FamilyMember> familyMembers = new ArrayList<>();
         familyMembers.addAll(
                 familyMemberResources.stream()
-                        .map( x -> convertResourceToEntity(x, null))
+                        .map( x -> convertResourceToEntity(x, () -> new FamilyMember()))
                         .collect(Collectors.toList())
         );
         return familyMembers;
