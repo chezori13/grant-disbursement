@@ -1,6 +1,7 @@
 package sg.com.gov.grant.disbursement.controller.handler;
 
 import org.springframework.stereotype.Component;
+import sg.com.gov.grant.disbursement.domain.FamilyMember;
 import sg.com.gov.grant.disbursement.domain.Household;
 import sg.com.gov.grant.disbursement.domain.baseType.HousingType;
 import sg.com.gov.grant.disbursement.resource.HouseholdResource;
@@ -47,7 +48,12 @@ public class HouseholdResourceConverter {
     public Household convertResourceToEntity(HouseholdResource householdResource, Supplier<Household> entitySupplier){
         Household household = entitySupplier.get();
         household.setHousingType(HousingType.fromString(householdResource.getHousingType()));
-        household.updateFamilyMembers(familyMemberResourceConverter.convertResourcesToEntities(householdResource.getFamilyMembers()));
+
+        Collection<FamilyMember> familyMembers =
+                familyMemberResourceConverter.convertResourcesToEntities(householdResource.getFamilyMembers());
+
+        familyMembers.stream().forEach(x -> x.setHousehold(household));
+        household.updateFamilyMembers(familyMembers);
         return household;
     }
 }
