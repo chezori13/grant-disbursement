@@ -38,14 +38,14 @@ public class HouseholdService {
             throw new EntityNotFoundException("Household not found: ID " + householdId);
         }
         if(MaritalStatusType.MARRIED == familyMember.getMaritalStatus()){
-            checkAndLinkSpouse(householdId, familyMember);
+            searchAndLinkSpouse(householdId, familyMember);
         }
         familyMember.setHousehold(household);
         household.addFamilyMember(familyMember);
         return householdRepository.save(household);
     }
 
-    private void checkAndLinkSpouse(Long householdId, FamilyMember familyMember) {
+    private void searchAndLinkSpouse(Long householdId, FamilyMember familyMember) {
         familyMember.getFamilyRelationships().stream()
                 .filter(x -> RelationshipType.MARRIED_TO == x.getRelationshipType())
                 .forEach( familyRelationship -> {
@@ -53,19 +53,23 @@ public class HouseholdService {
                             .findByHouseholdIdAndNameLike(householdId, familyRelationship.getSpouseNamePlaceHolder());
                     if(null != existingSpouse){
                         familyRelationship.setFamilyMember1(existingSpouse);
-
-                        //link up dangling spouse
-                        existingSpouse.getFamilyRelationships()
-                                .stream().filter(x -> RelationshipType.MARRIED_TO == x.getRelationshipType())
-                                .forEach( spouseRelationship -> {
-                                    if(null == spouseRelationship.getFamilyMember1()
-                                        && spouseRelationship.getSpouseNamePlaceHolder().equalsIgnoreCase(familyMember.getName())){
-                                        spouseRelationship.setFamilyMember1(familyMember);
-                                        familyMemberRepository.save(existingSpouse);
-                                    }
-
-                                });
+                        familyMemberRepository.save(familyMember);
+                        linkupDanglingSpouse(familyMember, existingSpouse);
                     }
+                });
+    }
+
+    private void linkupDanglingSpouse(FamilyMember familyMember, FamilyMember existingSpouse) {
+        //link up dangling spouse
+        existingSpouse.getFamilyRelationships()
+                .stream().filter(x -> RelationshipType.MARRIED_TO == x.getRelationshipType())
+                .forEach( spouseRelationship -> {
+                    if(null == spouseRelationship.getFamilyMember1()
+                        && spouseRelationship.getSpouseNamePlaceHolder().equalsIgnoreCase(familyMember.getName())){
+                        spouseRelationship.setFamilyMember1(familyMember);
+                        familyMemberRepository.save(existingSpouse);
+                    }
+
                 });
     }
 

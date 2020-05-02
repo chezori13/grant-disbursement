@@ -1,7 +1,6 @@
 package sg.com.gov.grant.disbursement.controller.handler;
 
 import org.springframework.stereotype.Component;
-import sg.com.gov.grant.disbursement.controller.handler.FamilyMemberResourceConverter;
 import sg.com.gov.grant.disbursement.domain.Household;
 import sg.com.gov.grant.disbursement.domain.baseType.HousingType;
 import sg.com.gov.grant.disbursement.resource.HouseholdResource;
